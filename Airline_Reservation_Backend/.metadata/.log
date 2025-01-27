@@ -1,0 +1,75 @@
+!SESSION 2025-01-27 11:18:21.494 -----------------------------------------------
+eclipse.buildId=4.34.0.202411281622
+java.version=21.0.5
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.springframework.boot.ide.branding.sts4
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.springframework.boot.ide.branding.sts4
+
+!ENTRY ch.qos.logback.classic 1 0 2025-01-27 11:19:20.579
+!MESSAGE Activated before the state location was initialized. Retry after the state location is initialized.
+
+!ENTRY ch.qos.logback.classic 1 0 2025-01-27 11:20:09.534
+!MESSAGE Logback config file: D:\Project\Airline_Reservation_Backend\.metadata\.plugins\org.eclipse.m2e.logback\logback.2.7.0.20241001-1350.xml
+
+!ENTRY org.eclipse.ui 2 0 2025-01-27 11:20:11.016
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2025-01-27 11:20:11.017
+!MESSAGE Commands should really have a category: plug-in='org.springframework.tooling.boot.ls', id='spring.initializr.addStarters', categoryId='org.eclipse.lsp4e.commandCategory'
+
+!ENTRY org.eclipse.ui 2 0 2025-01-27 11:20:11.982
+!MESSAGE Warnings while parsing the commands from the 'org.eclipse.ui.commands' and 'org.eclipse.ui.actionDefinitions' extension points.
+!SUBENTRY 1 org.eclipse.ui 2 0 2025-01-27 11:20:11.982
+!MESSAGE Commands should really have a category: plug-in='org.springframework.tooling.boot.ls', id='spring.initializr.addStarters', categoryId='org.eclipse.lsp4e.commandCategory'
+
+!ENTRY org.eclipse.mylyn.tasks.ui 2 0 2025-01-27 11:20:20.894
+!MESSAGE No search provider was registered. Tasks search is not available.
+
+!ENTRY org.eclipse.egit.ui 2 0 2025-01-27 11:20:26.100
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Lenovo'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-27 11:21:05.615
+!MESSAGE Classpath changed for project: spring_boot_backend_template
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-27 11:21:36.136
+!MESSAGE Classpath changed for project: spring_boot_backend_template
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-27 11:21:36.157
+!MESSAGE Boot project ADDED: spring_boot_backend_template
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-27 11:21:36.158
+!MESSAGE Starting Boot LS...
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-27 11:21:36.212
+!MESSAGE Started Boot LS process
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-01-27 11:21:36.790
+!MESSAGE Command list starting LS: org.springframework.tooling.boot.ls
+START:
+C:\STS_4.x\Windows\spring-tool-suite-4-4.27.0.RELEASE-e4.34.0-win32.win32.x86_64\sts-4.27.0.RELEASE\plugins\org.eclipse.justj.openjdk.hotspot.jre.full.win32.x86_64_21.0.5.v20241023-1957\jre\bin\javaw.exe
+-Dsts.lsp.client=eclipse
+-Xmx1024m
+-XX:TieredStopAtLevel=1
+-Dspring.config.location=classpath:/application.properties
+-Xlog:jni+resolve=off
+-XX:ErrorFile=D:/Project/Airline_Reservation_Backend/.metadata/.plugins/org.springframework.tooling.boot.ls/fatal-error-spring-boot_1737957096789
+-Dlanguageserver.hover-timeout=225
+-jar
+C:\STS_4.x\Windows\spring-tool-suite-4-4.27.0.RELEASE-e4.34.0-win32.win32.x86_64\sts-4.27.0.RELEASE\plugins\org.springframework.tooling.boot.ls_1.59.0.202411281450\servers\spring-boot-language-server\spring-boot-language-server-1.59.0-SNAPSHOT-exec.jar
+END
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-27 11:21:36.858
+!MESSAGE DelegatingStreamConnectionProvider - Starting Boot LS
+
+!ENTRY org.springframework.tooling.ls.eclipse.commons 1 0 2025-01-27 11:21:36.903
+!MESSAGE Started org.springframework.tooling.boot.ls LS process 10912
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-27 11:21:37.544
+!MESSAGE Classpath changed for project: spring_boot_backend_template
+
+!ENTRY org.springframework.tooling.boot.ls 1 0 2025-01-27 11:21:42.917
+!MESSAGE Classpath changed for project: spring_boot_backend_template
