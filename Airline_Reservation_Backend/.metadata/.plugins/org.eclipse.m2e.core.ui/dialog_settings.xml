@@ -2,6 +2,7 @@
 <section name="Workbench">
 	<section name="MavenProjectImportWizardPage">
 		<list key="rootDirectory">
+			<item value="D:\AIRLINE_RESERVATION_SYSTEM\Airline_Reservation_System_Application\Airline_Reservation_System\Airline_Reservation_Backend\Airline_Reservation_Backend"/>
 			<item value="D:\Project\Airline_Reservation_Backend\spring_boot_backend_template"/>
 		</list>
 		<list key="projectNameTemplate">
