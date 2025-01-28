@@ -31,8 +31,7 @@ public class UserDTO extends BaseDTO {
 	@Column(length = 20, nullable = false) // not null constraint
 	private String password;
 	private LocalDate dob;
-	@Column(name = "reg_amount")
-	private double regAmount;
+	
 	@Enumerated(EnumType.STRING) // create column of type
 	
 	@Column(length = 30) // varchar(30)
