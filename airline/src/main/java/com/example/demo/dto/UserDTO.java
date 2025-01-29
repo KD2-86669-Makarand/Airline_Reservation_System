@@ -21,19 +21,11 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 
-public class UserDTO extends BaseDTO {
-	@Column(name = "first_name", length = 20) // column name , varchar(20)
+public class UserDTO  {
 	private String firstName;
-	@Column(name = "last_name", length = 20) // column name , varchar(20)
 	private String lastName;
-	@Column(length = 25, unique = true) // adds unique constraint
 	private String email;
-	@Column(length = 20, nullable = false) // not null constraint
 	private String password;
 	private LocalDate dob;
 	
-	@Enumerated(EnumType.STRING) // create column of type
-	
-	@Column(length = 30) // varchar(30)
-	private UserRole role;
 }

@@ -11,6 +11,7 @@ import com.example.demo.dto.AuthRequest;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserRespDTO;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.UserRole;
 
 import jakarta.transaction.Transactional;
 @Service
@@ -35,6 +36,7 @@ public class UserServiceImpl  implements UserService{
 	@Override
 	public ApiResponse addUser(UserDTO user) {
 		UserEntity userEntity=modelMapper.map(user,UserEntity.class);
+		userEntity.setRole(UserRole.ROLE_USER);
 		UserEntity persistentUser=userDao.save(userEntity);
 		return new ApiResponse("Added new user with ID="
 				+ persistentUser.getId());
