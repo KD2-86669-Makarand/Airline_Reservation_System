@@ -9,5 +9,5 @@ import lombok.ToString;
 @ToString
 public class AuthRequest {
 	private String email;
-	private String passwrd;
+	private String password;
 }
