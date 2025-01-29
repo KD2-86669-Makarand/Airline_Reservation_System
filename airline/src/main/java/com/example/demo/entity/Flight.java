@@ -50,7 +50,7 @@ public class Flight {
 	private boolean isDirect = true;
 
 	@Column(name = "Duration")
-	private LocalDate duration;
+	private Long duration;
 
 	@Column(name = "Distance")
 	private float distance;

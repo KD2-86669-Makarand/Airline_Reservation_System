@@ -1,30 +1,42 @@
 package com.example.demo.services;
 
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.Optional;
+
+import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.ModelMap;
 
 import com.example.demo.dao.FlightDao;
+import com.example.demo.dao.UserDao;
 import com.example.demo.dao.AircraftDao;
 import com.example.demo.dao.AirlineDao;
 import com.example.demo.dao.AirportDao;
+import com.example.demo.dao.EditDao;
 import com.example.demo.dto.AircraftDTO;
 import com.example.demo.dto.AirlineDTO;
 import com.example.demo.dto.AirportDTO;
 import com.example.demo.dto.ApiResponse;
 import com.example.demo.dto.FlightDTO;
+import com.example.demo.dto.UserDTO;
 import com.example.demo.entity.Aircraft;
 import com.example.demo.entity.Airlines;
 import com.example.demo.entity.Airport;
 import com.example.demo.entity.Flight;
 import com.example.demo.entity.UserEntity;
+import com.example.demo.entity.UserRole;
 
 import jakarta.transaction.Transactional;
 
 @Service
 @Transactional
 public class AdminServiceImpl implements AdminService {
+	
+	@Autowired
+	private UserDao userDao;
 	
 	@Autowired
 	private FlightDao flightDao;
@@ -39,12 +51,40 @@ public class AdminServiceImpl implements AdminService {
 	private AirportDao airportDao;
 	
 	@Autowired
+	private EditDao editDao;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 
 	@Override
 	public ApiResponse addFlight(FlightDTO flight) {
-		Flight flightEntity = modelMapper.map(flight,Flight.class);
-		Flight saveFlight = flightDao.save(flightEntity);
+		
+		Airlines airlines = airlineDao.findById(flight.getAirline())
+				.orElseThrow(() -> new RuntimeException("Airline not found for Id = " + flight.getAirline()));
+		
+		Aircraft aircraft = aircraftDao.findById(flight.getAircraftId())
+				.orElseThrow(() -> new RuntimeException("Aircraft not found for Id = " + flight.getAircraftId()));
+		
+		Airport originAirport = airportDao.findById(flight.getOrigineAirport())
+	            .orElseThrow(() -> new RuntimeException("Origin airport not found for Id = " + flight.getOrigineAirport()));
+
+		Airport destinationAirport = airportDao.findById(flight.getDestinationAirport())
+	            .orElseThrow(() -> new RuntimeException("Destination airport not found for Id: " + flight.getDestinationAirport()));
+
+		Duration duration = Duration.between(flight.getDepartureTime(), flight.getArrivalTime());
+
+		
+		Flight flights = new Flight();
+		
+		flights.setAirline(airlines);
+		flights.setAircraftId(aircraft);
+		flights.setOrigineAirport(originAirport);
+		flights.setDestinationAirport(destinationAirport);
+		flights.setDirect(true);
+		flights.setDuration(duration.toHours());
+		
+	    
+		Flight saveFlight = flightDao.save(flights);
 		return new ApiResponse("Added New Flight With Id = " + saveFlight.getFlightId());
 	}
 
@@ -63,10 +103,47 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public ApiResponse addAircraft(AircraftDTO aircraft) {
-			Aircraft aircrafts =  modelMapper.map(aircraft, Aircraft.class);
-			Aircraft saveAircraft = aircraftDao.save(aircrafts);
-			return new ApiResponse("Added new Aircraft With Id = " + saveAircraft.getAircraftId());
+	public ApiResponse addAircraft(AircraftDTO aircraftDTO) {
+	    // Fetch the airline entity using the airline ID from the DTO
+	    Airlines airline = airlineDao.findById(aircraftDTO.getAirline())
+	            .orElseThrow(() -> new RuntimeException("Airline not found with ID: " + aircraftDTO.getAirline()));
+
+	    Aircraft aircraft = new Aircraft();
+	    aircraft.setAirline(airline);
+	    aircraft.setAircraftModel(aircraftDTO.getAircraftModel());
+	    aircraft.setAircraftCapacity(aircraftDTO.getAircraftCapacity());
+
+	    // Save the new aircraft entity
+	    Aircraft savedAircraft = aircraftDao.save(aircraft);
+	    
+	    // Return a response indicating success
+	    return new ApiResponse("Added new Aircraft with ID = " + savedAircraft.getAircraftId());
 	}
+	
+	@Override
+	public ApiResponse editUser(Long id, UserDTO editProfile) {
+		Optional<UserEntity> optionalUser = userDao.findById(id);
+	    
+	    if (optionalUser.isPresent()) {
+	        UserEntity user = optionalUser.get();
+
+	        // Update user details from the DTO
+	        modelMapper.map(editProfile, user); // Assuming editProfile contains updated fields
+
+	        // Set the role if needed (optional)
+	        user.setRole(UserRole.ROLE_USER);
+
+	        // Save the updated user entity
+	        UserEntity updatedUser = userDao.save(user);
+
+	        return new ApiResponse("User updated successfully with ID=" + updatedUser.getId());
+	    } 
+	    else {
+	        return new ApiResponse("User not found !!!");
+	    }
+	}
+
+
+
 
 }

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import com.example.demo.entity.Flight;
 import com.example.demo.services.AdminService;
 import com.example.demo.services.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
@@ -25,6 +27,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class AdminController {
 	@Autowired
 	private AdminService flightService;
+	
+	@Autowired
+	private UserService userService;
+	
 	
 	@PostMapping("/addAirline")
 	public ResponseEntity<ApiResponse> addAirline(@RequestBody AirlineDTO airline)
@@ -69,6 +75,12 @@ public class AdminController {
 	
 	}
 	
+	@PutMapping("/updateProfile/{id}")
+    public ResponseEntity<ApiResponse> updateUserProfile(@PathVariable Long id, @RequestBody UserDTO editProfile) {
+        ApiResponse response = userService.updateUser(id, editProfile);
+        return ResponseEntity.status(response.getMessage().equals("User updated successfully") ? HttpStatus.OK : HttpStatus.NOT_FOUND)
+                             .body(response);
+    }
 	
 	
 	
