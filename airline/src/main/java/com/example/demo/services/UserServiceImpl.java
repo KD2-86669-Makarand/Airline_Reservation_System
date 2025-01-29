@@ -1,5 +1,8 @@
 package com.example.demo.services;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +29,7 @@ public class UserServiceImpl  implements UserService{
 	@Override
 	public UserRespDTO signIn(AuthRequest dto) {
 		UserEntity userEntity = userDao.
-				findByEmailAndPassword(dto.getEmail(), dto.getPasswrd())
+				findByEmailAndPassword(dto.getEmail(), dto.getPassword())
 				.orElseThrow(() -> 
 				new ApiException("Invalid Email or password !!!!!"));
 		//user entity : persistent -> dto
@@ -42,7 +45,41 @@ public class UserServiceImpl  implements UserService{
 				+ persistentUser.getId());
 	}
 
+	@Override
+	public ApiResponse updateUser(Long userId, UserDTO userDto) {
+		
+	    UserEntity existingUser = userDao.findById(userId)
+	            .orElseThrow(() -> new ApiException("User not found with ID: " + userId));
+
+	   
+	    modelMapper.map(userDto, existingUser);
+
+	   
+	    UserEntity updatedUser = userDao.save(existingUser);
+
+	    return new ApiResponse("User updated successfully with ID: " + updatedUser.getId());
+	}
+
+	@Override
+	public ApiResponse softDeleteUser(Long userId) {
+	    UserEntity user = userDao.findById(userId)
+	            .orElseThrow(() -> new ApiException("User not found with ID: " + userId));
+
+	    if (user.getStatus() == UserEntity.Status.INACTIVE) {
+	        throw new ApiException("User is already inactive!");
+	    }
+
+	    user.setStatus(UserEntity.Status.INACTIVE);
+	    userDao.save(user);
+
+	    return new ApiResponse("User with ID: " + userId + " has been marked as inactive.");
+	}
+
+public List<UserRespDTO> getAllUser(){
+	return userDao.findAll().stream().map(user->modelMapper.map(user, UserRespDTO.class))
+			.collect(Collectors.toList());
+}
 	
-	
+
 	
 }
