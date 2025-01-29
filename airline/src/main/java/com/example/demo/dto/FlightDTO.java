@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -37,10 +38,14 @@ public class FlightDTO
 	
 	private Long destinationAirport;
 	
-	private boolean isDirect; // make it defalut as true
+	private boolean isDirect;
 
 	private LocalDate duration;
 
 	private float distance;
+	
+	private LocalDateTime departureTime; 
+
+	private LocalDateTime arrivalTime;
 
 }
