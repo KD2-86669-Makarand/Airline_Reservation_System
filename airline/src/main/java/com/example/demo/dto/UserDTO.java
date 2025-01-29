@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 
 import com.example.demo.entity.UserRole;
+import com.example.demo.entity.UserEntity.Status;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,18 +23,20 @@ import lombok.ToString;
 @ToString
 
 public class UserDTO extends BaseDTO {
-	@Column(name = "first_name", length = 20) // column name , varchar(20)
+	@Column(name = "first_name", length = 20) 
 	private String firstName;
-	@Column(name = "last_name", length = 20) // column name , varchar(20)
+	@Column(name = "last_name", length = 20) 
 	private String lastName;
-	@Column(length = 25, unique = true) // adds unique constraint
+	@Column(length = 25, unique = true) 
 	private String email;
-	@Column(length = 20, nullable = false) // not null constraint
+	@Column(length = 20, nullable = false)
 	private String password;
 	private LocalDate dob;
 	
-	@Enumerated(EnumType.STRING) // create column of type
+	@Enumerated(EnumType.STRING) 
 	
-	@Column(length = 30) // varchar(30)
+	@Column(length = 30) 
 	private UserRole role;
+	
+	private Status status;
 }
