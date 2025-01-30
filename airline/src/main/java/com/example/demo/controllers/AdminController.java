@@ -1,10 +1,13 @@
 package com.example.demo.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +17,7 @@ import com.example.demo.dto.AirlineDTO;
 import com.example.demo.dto.ApiResponse;
 import com.example.demo.dto.FlightDTO;
 import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserRespDTO;
 import com.example.demo.entity.Flight;
 import com.example.demo.services.AdminService;
 import com.example.demo.services.UserService;
@@ -24,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/flight")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AdminController {
 	@Autowired
 	private AdminService flightService;
@@ -45,6 +50,16 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST)
 					.body(new ApiResponse(e.getMessage()));
 		}
+	}
+	
+	@GetMapping
+	public ResponseEntity<?> getAllAirline()
+	{
+		List<AirlineDTO> airline = flightService.getAllAirlines();
+		if (airline.isEmpty()) 
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+		return ResponseEntity.ok(airline);
+		
 	}
 	
 	@PostMapping("/addAircraft")

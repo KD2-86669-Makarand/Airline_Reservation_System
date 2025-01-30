@@ -40,8 +40,6 @@ public class FlightDTO
 	
 	private boolean isDirect;
 
-	private LocalDate duration;
-
 	private float distance;
 	
 	private LocalDateTime departureTime; 
