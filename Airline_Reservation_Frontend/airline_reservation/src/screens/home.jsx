@@ -11,11 +11,10 @@ function Home() {
         </div>
 
         <nav>
-          <a href="Flights">Flights</a>
+          <a href="AvailableFlights">Flights</a>
           <a href="Book">Book</a>
-          <a href="Search">Search</a>
-          <a href="Help">Help</a>
-          <a href="Sign In">Sign In</a>
+          <a href="SearchFlight">Search</a>
+          <a href="login">Sign In</a>
         </nav>
       </header>
 

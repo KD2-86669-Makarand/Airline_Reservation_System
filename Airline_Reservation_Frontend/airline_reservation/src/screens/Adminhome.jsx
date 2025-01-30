@@ -7,7 +7,7 @@ function AdminHome() {
     <div>
       <header>
         <div class="logo">
-          <a href="/">New Horizon</a>
+          <a href="/">Admin UI</a>
         </div>
 
         <nav>
