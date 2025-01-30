@@ -1,10 +1,13 @@
 package com.example.demo.services;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.custom_exception.ApiException;
@@ -26,15 +29,26 @@ public class UserServiceImpl  implements UserService{
 	@Autowired
 	private ModelMapper modelMapper;
 
+
+	
 	@Override
-	public UserRespDTO signIn(AuthRequest dto) {
-		UserEntity userEntity = userDao.
-				findByEmailAndPassword(dto.getEmail(), dto.getPassword())
-				.orElseThrow(() -> 
-				new ApiException("Invalid Email or password !!!!!"));
-		//user entity : persistent -> dto
-		return modelMapper.map(userEntity, UserRespDTO.class);
+	public ResponseEntity<?> signIn(AuthRequest dto) {
+	    UserEntity userEntity = userDao.
+	            findByEmailAndPassword(dto.getEmail(), dto.getPassword())
+	            .orElseThrow(() -> new ApiException("Invalid Email or password !!!!!"));
+
+	    // Convert entity to DTO
+	    UserRespDTO userDto = modelMapper.map(userEntity, UserRespDTO.class);
+	    userDto.setRole(userEntity.getRole().name()); // Ensure role is set
+
+	    // Return user and token
+	    Map<String, Object> response = new HashMap<>();
+	    response.put("user", userDto);
+	    response.put("token", "fake-jwt-token"); // Replace with actual token logic
+
+	    return ResponseEntity.ok(response);
 	}
+
 
 	@Override
 	public ApiResponse addUser(UserDTO user) {
