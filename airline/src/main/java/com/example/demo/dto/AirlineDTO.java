@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
-public class AirlineDTO 
-{
+public class AirlineDTO extends BaseDTO
+{	
 	private String airlineName;
 
 	private String airlineCode;

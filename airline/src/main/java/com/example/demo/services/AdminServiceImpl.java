@@ -2,7 +2,10 @@ package com.example.demo.services;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
@@ -22,6 +25,7 @@ import com.example.demo.dto.AirportDTO;
 import com.example.demo.dto.ApiResponse;
 import com.example.demo.dto.FlightDTO;
 import com.example.demo.dto.UserDTO;
+import com.example.demo.dto.UserRespDTO;
 import com.example.demo.entity.Aircraft;
 import com.example.demo.entity.Airlines;
 import com.example.demo.entity.Airport;
@@ -70,7 +74,7 @@ public class AdminServiceImpl implements AdminService {
 
 		Airport destinationAirport = airportDao.findById(flight.getDestinationAirport())
 	            .orElseThrow(() -> new RuntimeException("Destination airport not found for Id: " + flight.getDestinationAirport()));
-
+		System.out.println("destination airport : " + destinationAirport);
 		Duration duration = Duration.between(flight.getDepartureTime(), flight.getArrivalTime());
 
 		
@@ -80,9 +84,11 @@ public class AdminServiceImpl implements AdminService {
 		flights.setAircraftId(aircraft);
 		flights.setOrigineAirport(originAirport);
 		flights.setDestinationAirport(destinationAirport);
+		flights.setDistance(flight.getDistance());
 		flights.setDirect(true);
 		flights.setDuration(duration.toHours());
 		
+		System.out.println("flight : " + flights);
 	    
 		Flight saveFlight = flightDao.save(flights);
 		return new ApiResponse("Added New Flight With Id = " + saveFlight.getFlightId());
@@ -141,6 +147,13 @@ public class AdminServiceImpl implements AdminService {
 	    else {
 	        return new ApiResponse("User not found !!!");
 	    }
+	}
+
+	@Override
+	public List<AirlineDTO> getAllAirlines() {
+		return airlineDao.findAll().stream()
+	            .map(airline -> modelMapper.map(airline, AirlineDTO.class))
+	            .collect(Collectors.toList());
 	}
 
 
