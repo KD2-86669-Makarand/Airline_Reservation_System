@@ -7,7 +7,7 @@ function AdminHome() {
     <div>
       <header>
         <div class="logo">
-          <a href="/">Admin UI</a>
+          <a href="UserList">Users</a>
         </div>
 
         <nav>

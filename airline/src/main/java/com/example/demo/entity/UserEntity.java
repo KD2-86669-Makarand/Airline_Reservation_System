@@ -27,9 +27,12 @@ public class UserEntity extends BaseEntity {
 	private String password;
 	private LocalDate dob;
 	
+	//private String country ;
 	@Enumerated(EnumType.STRING) 
 	
 	@Column(length = 30) 
+	
+	
 	private UserRole role;
 	
 	@Column(length=20)
