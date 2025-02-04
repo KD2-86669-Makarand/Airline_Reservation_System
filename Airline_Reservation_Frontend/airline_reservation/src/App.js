@@ -8,6 +8,8 @@ import SearchFlight from "./screens/SearchFlight";
 import AvailableFlights from "./screens/AvailableFlights";
 import AddAirline from "./screens/AddAirlines";
 import AdminHome from "./screens/Adminhome";
+import AddAircraft from "./screens/AddAircraft";
+import AddFlight from "./screens/AddFlight";
 
 function App() {
   return (
@@ -20,6 +22,8 @@ function App() {
         <Route path="AvailableFlights" element={<AvailableFlights />} />
         <Route path="AddAirlines" element={<AddAirline />} />
         <Route path="AdminHome" element={<AdminHome />} />
+        <Route path="AddAircraft" element={<AddAircraft />} />
+        <Route path="AddFlight" element={<AddFlight />} />
       </Routes>
     </div>
   );
