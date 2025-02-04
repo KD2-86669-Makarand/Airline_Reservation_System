@@ -1,20 +1,21 @@
 import React from "react";
-import "./Home.css";
+import "./home";
 import SearchFlight from "./SearchFlight";
 
-function Home() {
+function AdminHome() {
   return (
     <div>
       <header>
         <div class="logo">
-          <a href="/">New Horizon</a>
+          <a href="UserList">Users</a>
         </div>
 
         <nav>
-          <a href="AvailableFlights">Flights</a>
-          <a href="Book">Book</a>
-          <a href="SearchFlight">Search</a>
-          <a href="login">Sign In</a>
+          <a href="Airline">Airline</a>
+          <a href="Aircraft">Aircraft</a>
+          <a href="Flights">Flights</a>
+          <a href="login">SignIn</a>
+          <a href="Logout">Logout</a>
         </nav>
       </header>
 
@@ -53,4 +54,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default AdminHome;
