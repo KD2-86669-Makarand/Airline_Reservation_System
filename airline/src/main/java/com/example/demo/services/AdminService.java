@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import java.util.List;
 
+import com.example.demo.dto.AddAircraftDTO;
 import com.example.demo.dto.AircraftDTO;
 import com.example.demo.dto.AirlineDTO;
 import com.example.demo.dto.AirportDTO;
@@ -9,6 +10,7 @@ import com.example.demo.dto.ApiResponse;
 import com.example.demo.dto.FlightDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserRespDTO;
+import com.example.demo.entity.Aircraft;
 import com.example.demo.entity.Airlines;
 
 public interface AdminService {
@@ -16,12 +18,20 @@ public interface AdminService {
 	
 	ApiResponse addAirline(AirlineDTO airline);
 	
-	ApiResponse addAircraft(AircraftDTO aircraft);
+	ApiResponse addAircraft(AddAircraftDTO aircraft);
 	
 	ApiResponse addAirport(AirportDTO airport);
-
-	ApiResponse editUser(Long id, UserDTO editProfile);
+	
+	public List<AircraftDTO> getAllAircraft();
 	
 	public List<AirlineDTO> getAllAirlines();
+	
+	ApiResponse getAirlineById(Long id);
+	
+	ApiResponse updateAirline(Long airlineId,AirlineDTO airlineDto);
+	
+	public ApiResponse softDeleteAirline(Long airlineId, AirlineDTO airlineDTO); 
+	
+	public List<FlightDTO> getAllFlights();
 	
 }
