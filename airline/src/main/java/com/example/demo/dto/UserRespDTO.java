@@ -18,7 +18,7 @@ public class UserRespDTO extends BaseDTO {
 	private String lastName;
 	private LocalDate dob;
 	private String email;
-	//private UserRole role;
+	
 	private Status status;
 	private String role; // Make sure role is present
 

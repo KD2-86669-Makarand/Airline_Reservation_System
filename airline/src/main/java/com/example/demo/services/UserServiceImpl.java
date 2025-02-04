@@ -53,7 +53,7 @@ public class UserServiceImpl  implements UserService{
 	@Override
 	public ApiResponse addUser(UserDTO user) {
 		UserEntity userEntity=modelMapper.map(user,UserEntity.class);
-		userEntity.setRole(UserRole.ROLE_USER);
+		userEntity.setRole(UserRole.ROLE_ADMIN);
 		UserEntity persistentUser=userDao.save(userEntity);
 		return new ApiResponse("Added new user with ID="
 				+ persistentUser.getId());

@@ -41,7 +41,7 @@ public class UserController {
 		}
 	}
     
-    @PostMapping
+    @PostMapping("/add")
 	public ResponseEntity<?> addUser
 	(@RequestBody UserDTO user) {
 		System.out.println("in add user " + user);// transient category
@@ -51,7 +51,7 @@ public class UserController {
     
     
     //update user 
-    @PutMapping("/{userId}")
+    @PutMapping("/update/{userId}")
     public ResponseEntity<?> updateUserDetails(@PathVariable Long userId,@RequestBody UserDTO user)
     {
     	System.out.println("in update user " + userId + " " + user);
@@ -60,7 +60,7 @@ public class UserController {
     }
     
     
-    @PutMapping("/{userId}/deactivate")
+    @PutMapping("delete/{userId}/deactivate")
     public ResponseEntity<ApiResponse> deactivateUser(@PathVariable Long userId) {
         ApiResponse response = userService.softDeleteUser(userId);
         return ResponseEntity.ok(response);
