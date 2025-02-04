@@ -9,11 +9,20 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 
-public class AirlineDTO extends BaseDTO
+public class AirlineDTO 
 {	
+	private Long airlineId;
+	
 	private String airlineName;
 
 	private String airlineCode;
 
 	private String country;
+	
+	private Status status;
+
+    public enum Status {
+        ACTIVE,
+        INACTIVE
+    }
 }
