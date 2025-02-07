@@ -13,7 +13,7 @@ function Home() {
         <nav>
           <a href="AvailableFlights">Flights</a>
           <a href="Book">Book</a>
-          <a href="SearchFlight">Search</a>
+          {/* <a href="SearchFlight">Search</a> */}
           <a href="login">Sign In</a>
         </nav>
       </header>

@@ -9,6 +9,7 @@ import AvailableFlights from "./screens/AvailableFlights";
 import AddAirline from "./screens/AddAirlines";
 import AdminHome from "./screens/Adminhome";
 import UserList from "./screens/Users";
+import BookFlight from "./screens/Book";
 
 function App() {
   return (
@@ -17,8 +18,9 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
         <Route path="Register" element={<Register />} />
-        <Route path="SearchFlight" element={<SearchFlight />} />
+        {/* <Route path="SearchFlight" element={<SearchFlight />} /> */}
         <Route path="AvailableFlights" element={<AvailableFlights />} />
+        <Route path="Book" element={<BookFlight />} />
         <Route path="AddAirlines" element={<AddAirline />} />
         <Route path="AdminHome" element={<AdminHome />} />
         <Route path="UserList" element={<UserList/>} />
