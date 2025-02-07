@@ -31,7 +31,11 @@ header a:last-child {
 
 .hero {
     /* background-image: url('D:\AIRLINE_RESERVATION_SYSTEM\Airline_Reservation_System\Airline_Reservation_System\airline_reservation\public');  kartik */
+<<<<<<< HEAD
     background-image: url('H:\Airline_Reservation_System\Airline_Reservation_System\Airline_Reservation_Frontend\airline_reservation\public\background4.jpg'); /* makarand */
+=======
+    background-image: url('D:\AIRLINE_RESERVATION_SYSTEM\Airline_Reservation_System_Application\Airline_Reservation_System\Airline_Reservation_Frontend\airline_reservation\public\background4.jpg'); /* makarand */
+>>>>>>> 3dd6f590cfdcedbd05fc37bdf10499e81a17ac75
     background-position: center;
     background-size: cover;
     height: 650px;
