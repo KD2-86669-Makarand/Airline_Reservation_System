@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -140,7 +140,7 @@ function AddAirlines() {
     <div>
       <h2>Add or Edit Airline</h2>
       <table>
-=======
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./AddAirline.css";
@@ -241,22 +241,22 @@ const AddAirlines = () => {
     <div className="container mx-auto p-6">
       <h2>ADD AIRLINE</h2>
       <table border="2">
->>>>>>> main
+
         <thead>
           <tr>
             <th>Airline Name</th>
             <th>Airline Code</th>
             <th>Country</th>
-<<<<<<< HEAD
-=======
+
+
             <th>Status</th>
->>>>>>> main
+
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
           {airlines.map((airline) => (
-<<<<<<< HEAD
+
             <tr key={airline.id}>
               <td>{airline.airlineName}</td>
               <td>{airline.airlineCode}</td>
@@ -267,7 +267,6 @@ const AddAirlines = () => {
                   Delete
                 </button>
               </td>
-=======
             <tr key={airline.airlineId}>
               {editData[airline.airlineId] ? (
                 <>
@@ -336,12 +335,12 @@ const AddAirlines = () => {
                   </td>
                 </>
               )}
->>>>>>> main
+
             </tr>
           ))}
         </tbody>
       </table>
-<<<<<<< HEAD
+
 
       <div>
         <input
@@ -369,7 +368,7 @@ const AddAirlines = () => {
       ) : (
         <button onClick={addAirline}>Add Airline</button>
       )}
-=======
+
       <h3>Add New Airline</h3>
       <input
         type="text"
@@ -393,7 +392,7 @@ const AddAirlines = () => {
         placeholder="Country"
       />
       <button onClick={handleAdd}>Add Airline</button>
->>>>>>> main
+
     </div>
   );
 };
