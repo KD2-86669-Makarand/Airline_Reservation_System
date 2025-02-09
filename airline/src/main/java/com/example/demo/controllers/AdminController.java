@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.demo.dao.AircraftDao;
 import com.example.demo.dao.AirlineDao;
 import com.example.demo.dto.AddAircraftDTO;
 import com.example.demo.dto.AircraftDTO;
@@ -25,6 +26,7 @@ import com.example.demo.dto.ApiResponse;
 import com.example.demo.dto.FlightDTO;
 import com.example.demo.dto.UserDTO;
 import com.example.demo.dto.UserRespDTO;
+import com.example.demo.entity.Aircraft;
 import com.example.demo.entity.Airlines;
 import com.example.demo.entity.Flight;
 import com.example.demo.services.AdminService;
@@ -37,12 +39,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RestController
 @RequestMapping("/flight")
 @CrossOrigin(origins = "http://localhost:3000")
+//@CrossOrigin(origins = "http://192.168.1.17:3000")
 public class AdminController {
 	@Autowired
 	private AdminService flightService;
 	
 	@Autowired
 	private AirlineDao airlineDao;
+	
+	@Autowired
+	private AircraftDao aircraftDao;
 	
 	@Autowired 
 	ModelMapper modelmapper;
@@ -76,6 +82,15 @@ public class AdminController {
 		}
 	}
 	
+	@PutMapping("/airline/{airlineId}/deactivate")
+	public ResponseEntity<ApiResponse> deactivateAirline(@PathVariable Long airlineId) {
+	    ApiResponse response = flightService.softDeleteAirline(airlineId);
+	    return ResponseEntity.ok(response);
+	}
+
+
+
+	
 	@PostMapping("/deleteAirline")
 	public ResponseEntity<ApiResponse> deleteAirline(@RequestBody AirlineDTO airlineDTO) {
 	    try {
@@ -94,45 +109,44 @@ public class AdminController {
 	                .body(new ApiResponse(e.getMessage()));
 	    }
 	}
-	
-	@PutMapping("/softDeleteAirline/{id}")
-	public ResponseEntity<ApiResponse> softDeleteAirline(@PathVariable Long id) {
-	    try {
-	        Optional<Airlines> airline = airlineDao.findById(id);
-	        
-	        if (airline.isPresent()) {
-	            Airlines updatedAirline = airline.get();
-	            updatedAirline.setStatus(Airlines.Status.INACTIVE); // Soft delete by setting status to INACTIVE
-	            airlineDao.save(updatedAirline); // Save updated airline
-	            return ResponseEntity.ok(new ApiResponse("Airline soft deleted"));
-	        } else {
-	            return ResponseEntity.status(HttpStatus.NOT_FOUND)
-	                                 .body(new ApiResponse("Airline not found"));
-	        }
-	    } catch (Exception e) {
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-	                             .body(new ApiResponse("Error: " + e.getMessage()));
-	    }
-	}
+		
+//	@PutMapping("/updateAirline/{id}")
+//	public ResponseEntity<Airlines> updateAirline(@PathVariable Long id, @RequestBody Airlines updatedAirline) {
+//	    System.out.println("Received Update Request for ID: " + id);
+//	    System.out.println("Updated Data: " + updatedAirline);
+//
+//	    Optional<Airlines> existingAirline = airlineDao.findById(id);
+//	    if (existingAirline.isPresent()) {
+//	        Airlines airline = existingAirline.get();
+//	        airline.setAirlineName(updatedAirline.getAirlineName());
+//	        airline.setAirlineCode(updatedAirline.getAirlineCode());
+//	        airline.setCountry(updatedAirline.getCountry());
+//	        airline.setStatus(updatedAirline.getStatus());
+//
+//	        Airlines savedAirline = airlineDao.save(airline);
+//	        return ResponseEntity.ok(savedAirline);
+//	    } else {
+//	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//	    }
+//	}
 
-	
 	@PutMapping("/updateAirline/{id}")
-	public ResponseEntity<Airlines> updateAirline(@PathVariable Long id, @RequestBody Airlines updatedAirline) {
-	    System.out.println("Received Update Request for ID: " + id);
-	    System.out.println("Updated Data: " + updatedAirline);
-
-	    Optional<Airlines> existingAirline = airlineDao.findById(id);
-	    if (existingAirline.isPresent()) {
-	        Airlines airline = existingAirline.get();
-	        airline.setAirlineName(updatedAirline.getAirlineName());
-	        airline.setAirlineCode(updatedAirline.getAirlineCode());
-	        airline.setCountry(updatedAirline.getCountry());
-	        airline.setStatus(updatedAirline.getStatus());
-
-	        Airlines savedAirline = airlineDao.save(airline);
+	public ResponseEntity<Airlines> updateAirline(@PathVariable Long id, @RequestBody Airlines updateAirlines)
+	{
+		return airlineDao.findById(id).map(existingAirline -> {
+	        modelmapper.map(updateAirlines, existingAirline);
+	        Airlines savedAirline = airlineDao.save(existingAirline);
 	        return ResponseEntity.ok(savedAirline);
-	    } else {
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	    }).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+	}
+	
+	@PutMapping("/updateAircraft/{id}")
+	public ResponseEntity<ApiResponse> updateAircraft(@PathVariable Long id, @RequestBody AircraftDTO aircraftDTO) {
+	    try {
+	        ApiResponse response = flightService.updateAircraft(id, aircraftDTO);
+	        return ResponseEntity.ok(response);
+	    } catch (RuntimeException e) {
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage()));
 	    }
 	}
 

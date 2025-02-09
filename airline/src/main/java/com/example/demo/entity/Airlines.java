@@ -37,12 +37,12 @@ public class Airlines {
 	@Column(name = "Country", length = 50)
 	private String country;
 	
-	@Enumerated(EnumType.STRING)
-	private Status status;
-	
-	public enum Status {
-        ACTIVE,
-        INACTIVE
+	@Enumerated(EnumType.STRING) // Ensure ENUM is stored as a String
+    @Column(columnDefinition = "ENUM('ACTIVE','INACTIVE')") // Explicit ENUM definition
+    private Status status;
+
+    public enum Status {
+        ACTIVE, INACTIVE
     }
 	
 }
