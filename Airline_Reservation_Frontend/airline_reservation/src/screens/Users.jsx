@@ -55,19 +55,24 @@ const UserList = () => {
     axios
       .put(`http://localhost:8080/users/update/${formData.id}`, updatedUser)
       .then((response) => {
-        setUsers(users.map((user) => (user.id === formData.id ? response.data : user)));
+        setUsers(
+          users.map((user) => (user.id === formData.id ? response.data : user))
+        );
         resetForm();
       })
       .catch((error) => console.error("Error updating user:", error));
   };
-
 
   const handleDeactivate = (id) => {
     axios
       .put(`http://localhost:8080/users/delete/${id}/deactivate`)
       .then(() => {
         // Update UI: Change status to INACTIVE
-        setUsers(users.map((user) => (user.id === id ? { ...user, status: "INACTIVE" } : user)));
+        setUsers(
+          users.map((user) =>
+            user.id === id ? { ...user, status: "INACTIVE" } : user
+          )
+        );
       })
       .catch((error) => console.error("Error deactivating user:", error));
   };
@@ -93,11 +98,40 @@ const UserList = () => {
 
       {/* User Form */}
       <div className="form-container">
-        <input type="text" name="firstName" value={formData.firstName} onChange={handleChange} placeholder="First Name" />
-        <input type="text" name="lastName" value={formData.lastName} onChange={handleChange} placeholder="Last Name" />
-        <input type="date" name="dob" value={formData.dob} onChange={handleChange} />
-        <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" />
-        <input type="password" name="password" value={formData.password} onChange={handleChange} placeholder="Password" />
+        <input
+          type="text"
+          name="firstName"
+          value={formData.firstName}
+          onChange={handleChange}
+          placeholder="First Name"
+        />
+        <input
+          type="text"
+          name="lastName"
+          value={formData.lastName}
+          onChange={handleChange}
+          placeholder="Last Name"
+        />
+        <input
+          type="date"
+          name="dob"
+          value={formData.dob}
+          onChange={handleChange}
+        />
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email"
+        />
+        <input
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+          placeholder="Password"
+        />
         <select name="status" value={formData.status} onChange={handleChange}>
           <option value="ACTIVE">Active</option>
           <option value="INACTIVE">Inactive</option>
@@ -109,7 +143,11 @@ const UserList = () => {
         <button onClick={isEditing ? handleUpdateUser : handleAddUser}>
           {isEditing ? "Update User" : "Add Admin"}
         </button>
-        {isEditing && <button onClick={resetForm} className="cancel-btn">Cancel</button>}
+        {isEditing && (
+          <button onClick={resetForm} className="cancel-btn">
+            Cancel
+          </button>
+        )}
       </div>
 
       {/* User Table */}
@@ -137,9 +175,11 @@ const UserList = () => {
               <td>{user.status}</td>
               <td>{user.role}</td>
               <td>
-                <button className="edit-btn" onClick={() => handleEdit(user)}>Edit</button>
+                <button className="edit-btn" onClick={() => handleEdit(user)}>
+                  Edit
+                </button>
               </td>
-            
+
               <td>
                 <button
                   className="deactivate-btn"
