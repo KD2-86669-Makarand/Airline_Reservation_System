@@ -30,7 +30,9 @@ public interface AdminService {
 	
 	ApiResponse updateAirline(Long airlineId,AirlineDTO airlineDto);
 	
-	public ApiResponse softDeleteAirline(Long airlineId, AirlineDTO airlineDTO); 
+	ApiResponse updateAircraft(Long aircraftId, AircraftDTO aircraftDTO);
+	
+	public ApiResponse softDeleteAirline(Long airlineId); 
 	
 	public List<FlightDTO> getAllFlights();
 	
