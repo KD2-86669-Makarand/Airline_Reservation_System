@@ -20,8 +20,6 @@ public class AircraftDTO
 	private String aircraftModel;
 
 	private int aircraftCapacity;
-
-	
 	
     private String airlineName;
 }

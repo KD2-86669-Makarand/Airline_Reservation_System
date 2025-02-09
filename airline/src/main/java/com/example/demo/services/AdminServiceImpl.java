@@ -120,24 +120,7 @@ public class AdminServiceImpl implements AdminService {
 		return new ApiResponse("Added new Airline with Id = " + saveAirports.getAirportId());
 	}
 
-//	@Override
-//	public ApiResponse addAircraft(AircraftDTO aircraftDTO) {
-//	    // Fetch the airline entity using the airline ID from the DTO
-//	    Airlines airline = airlineDao.findById(aircraftDTO.getAirline())
-//	            .orElseThrow(() -> new RuntimeException("Airline not found with ID: " + aircraftDTO.getAirline()));
-//
-//	    Aircraft aircraft = new Aircraft();
-//	    aircraft.setAirline(airline);
-//	    aircraft.setAircraftModel(aircraftDTO.getAircraftModel());
-//	    aircraft.setAircraftCapacity(aircraftDTO.getAircraftCapacity());
-//
-//	    // Save the new aircraft entity
-//	    Aircraft savedAircraft = aircraftDao.save(aircraft);
-//	    
-//	    // Return a response indicating success
-//	    return new ApiResponse("Added new Aircraft with ID = " + savedAircraft.getAircraftId());
-//	}
-	
+
 
 	@Override
 	public List<AirlineDTO> getAllAirlines() {
@@ -146,21 +129,7 @@ public class AdminServiceImpl implements AdminService {
 	            .collect(Collectors.toList());
 	}
 	
-//	@Override
-//	public List<AirlineDTO> getAllAirlines() {
-//	    List<Airlines> airlines = airlineDao.findAll();
-//	    return airlines.stream()
-//	            .map(airline -> {
-//	                AirlineDTO dto = new AirlineDTO();
-//	                dto.setId(airline.getAirlineId());
-//	                dto.setAirlineName(airline.getAirlineName());
-//	                dto.setAirlineCode(airline.getAirlineCode());
-//	                dto.setCountry(airline.getCountry());
-//	                dto.setStatus(AirlineDTO.Status.valueOf(airline.getStatus().name()));
-//	                return dto;
-//	            })
-//	            .collect(Collectors.toList());
-//	}
+
 
 	@Override
 	public ApiResponse getAirlineById(Long id) {
@@ -172,16 +141,33 @@ public class AdminServiceImpl implements AdminService {
 			return new ApiResponse("Success");
 		    
 	}
+	
+	
+	@Override
+	public ApiResponse softDeleteAirline(Long airlineId) {
+	    Airlines airline = airlineDao.findById(airlineId)
+	            .orElseThrow(() -> new ApiException("Airline not found with ID: " + airlineId));
 
+	    // Check if airline is already inactive
+	    if (airline.getStatus() == Airlines.Status.INACTIVE) {
+	        throw new ApiException("Airline is already inactive!");
+	    }
+
+	    // Set airline status to INACTIVE
+	    airline.setStatus(Airlines.Status.INACTIVE);
+	    airlineDao.save(airline);
+
+	    return new ApiResponse("Airline with ID: " + airlineId + " has been marked as INACTIVE.");
+	}
+
+	
 	@Override
 	public ApiResponse updateAirline(Long airlineId, AirlineDTO airlineDto) {
-		Airlines existingAirline = airlineDao.findById(airlineId)
+	    Airlines existingAirline = airlineDao.findById(airlineId)
 	            .orElseThrow(() -> new RuntimeException("Airline not found for ID = " + airlineId));
 
-	    // Update the airline details with the provided DTO data
-	    existingAirline.setAirlineName(airlineDto.getAirlineName());
-	    existingAirline.setAirlineCode(airlineDto.getAirlineCode());
-	    existingAirline.setCountry(airlineDto.getCountry());
+	    // Use ModelMapper to map DTO fields to the existing entity
+	    modelMapper.map(airlineDto, existingAirline);
 
 	    // Save the updated airline to the database
 	    Airlines updatedAirline = airlineDao.save(existingAirline);
@@ -189,58 +175,43 @@ public class AdminServiceImpl implements AdminService {
 	    // Return a response indicating success
 	    return new ApiResponse("Airline updated successfully with ID = " + updatedAirline.getAirlineId());
 	}
-
+	
 	@Override
-	public ApiResponse softDeleteAirline(Long airlineId, AirlineDTO airlineDto) {
-		
-		    // Find the airline by its ID
-		    Airlines airline = airlineDao.findById(airlineId)
-		        .orElseThrow(() -> new RuntimeException("Airline not found with ID: " + airlineId));
+	public ApiResponse updateAircraft(Long aircraftId, AircraftDTO aircraftDTO) {
+	    Aircraft existingAircraft = aircraftDao.findById(aircraftId)
+	            .orElseThrow(() -> new RuntimeException("Aircraft not found for ID = " + aircraftId));
 
-		    // Set the airline status to inactive
-//		    airline.setStatus("inactive");  // Or if it's a boolean, use airline.setActive(false);
-		    airline.setStatus(Status.INACTIVE);
-		    // Save the airline with the updated status
-		    Airlines updatedAirline = airlineDao.save(airline);
+	    // Use ModelMapper to map DTO fields to the existing entity
+	    modelMapper.map(aircraftDTO, existingAircraft);
 
-		    // Return a response indicating the airline status was successfully updated
-		    return new ApiResponse("Airline with ID " + airlineId + " marked as inactive.");
-		}
+	    // Save the updated aircraft to the database
+	    Aircraft updatedAircraft = aircraftDao.save(existingAircraft);
+
+	    return new ApiResponse("Aircraft updated successfully with ID = " + updatedAircraft.getAircraftId());
+	}
 
 
 	@Override
 	public List<AircraftDTO> getAllAircraft() {
 	    return aircraftDao.findAll().stream()
-	            .map(aircraft -> {
-	                AircraftDTO dto = new AircraftDTO();
-	                dto.setAircraftModel(aircraft.getAircraftModel());
-	                dto.setAircraftCapacity(aircraft.getAircraftCapacity());
-	                dto.setAirlineName(aircraft.getAirline().getAirlineName());
-	               
-	                return dto;
-	                
-	                
+	            .map(aircraft -> {	
+	            	AircraftDTO dto = modelMapper.map(aircraft, AircraftDTO.class);
+	            	dto.setAirlineName(aircraft.getAirline().getAirlineName());
+	            	return dto;
 	            })
 	            .collect(Collectors.toList());
 	}
 
 	@Override
-	public ApiResponse addAircraft(AddAircraftDTO aircraft) {
-		 // Fetch the airline entity using the airline ID from the DTO
-	    Airlines airline = airlineDao.findById(aircraft.getAirline())
-	            .orElseThrow(() -> new RuntimeException("Airline not found with ID: " + aircraft.getAirline()));
-
-	    Aircraft aircrafts = new Aircraft();
-	    aircrafts.setAirline(airline);
-	    aircrafts.setAircraftModel(aircraft.getAircraftModel());
-	    aircrafts.setAircraftCapacity(aircraft.getAircraftCapacity());
-
-	    // Save the new aircraft entity
-	    Aircraft savedAircraft = aircraftDao.save(aircrafts);
+	public ApiResponse addAircraft(AddAircraftDTO aircraftDTO) {
+	    Airlines airline = airlineDao.findById(aircraftDTO.getAirline())
+	            .orElseThrow(() -> new RuntimeException("Airline not found with ID: " + aircraftDTO.getAirline()));
 	    
-	    // Return a response indicating success
-	    return new ApiResponse("Added new Aircraft with ID = " + savedAircraft.getAircraftId());
-
+	    Aircraft aircraft = modelMapper.map(aircraftDTO, Aircraft.class);
+	    aircraft.setAirline(airline);
+	    Aircraft saveAircraft = aircraftDao.save(aircraft);
+	    
+	    return new ApiResponse("New Aircraft added with Id : " + saveAircraft.getAircraftId());
 	}
 
 	@Override

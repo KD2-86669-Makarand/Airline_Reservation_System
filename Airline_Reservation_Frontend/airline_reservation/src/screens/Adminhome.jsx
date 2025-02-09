@@ -1,6 +1,7 @@
 import React from "react";
 import "./home";
 import SearchFlight from "./SearchFlight";
+import AdminNavbar from "../Components/AdminNavbar";
 
 function AdminHome() {
   return (
@@ -9,14 +10,7 @@ function AdminHome() {
         <div class="logo">
           <a href="UserList">Users</a>
         </div>
-
-        <nav>
-          <a href="Airline">Airline</a>
-          <a href="Aircraft">Aircraft</a>
-          <a href="Flights">Flights</a>
-          <a href="login">SignIn</a>
-          <a href="Logout">Logout</a>
-        </nav>
+        <AdminNavbar />
       </header>
 
       <div class="hero">
