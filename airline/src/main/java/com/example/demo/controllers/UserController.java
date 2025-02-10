@@ -41,14 +41,26 @@ public class UserController {
 		}
 	}
     
+    //for add admin
     @PostMapping("/add")
 	public ResponseEntity<?> addUser
 	(@RequestBody UserDTO user) {
-		System.out.println("in add user " + user);// transient category
+		System.out.println("in add user " + user);
 		return ResponseEntity.status(HttpStatus.CREATED)
 				.body(userService.addUser(user));
 	}
     
+
+    
+  //for register
+    @PostMapping("/register")
+   	public ResponseEntity<?> registerUsers
+   	(@RequestBody UserDTO user) {
+   		System.out.println("in add user " + user);
+   		return ResponseEntity.status(HttpStatus.CREATED)
+   				.body(userService.registerUser(user));
+   	}
+       
     
     //update user 
     @PutMapping("/update/{userId}")

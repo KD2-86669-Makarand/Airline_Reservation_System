@@ -21,6 +21,7 @@ function Home() {
           {/* <a href="SearchFlight">Search</a> */}
           <a href="login">Sign In</a>
         </nav>
+
       </header>
 
       <div className="hero">
