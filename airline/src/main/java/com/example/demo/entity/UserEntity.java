@@ -27,7 +27,8 @@ public class UserEntity extends BaseEntity {
 	private String password;
 	private LocalDate dob;
 	
-	//private String country ;
+	private String country ;
+	private Long phone;
 	@Enumerated(EnumType.STRING) 
 	
 	@Column(length = 30) 

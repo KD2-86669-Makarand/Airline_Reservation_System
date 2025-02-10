@@ -11,10 +11,14 @@ import com.example.demo.dto.UserRespDTO;
 import com.example.demo.entity.UserEntity;
 
 public interface UserService {
-	ApiResponse addUser(UserDTO user);
+	ApiResponse addUser(UserDTO user);//add admin
 	ApiResponse updateUser(Long userId,UserDTO userDto);//update user
 	public ApiResponse softDeleteUser(Long userId); //softdelete of user
 
 	public List<UserRespDTO> getAllUser();
 	public ResponseEntity<?> signIn(AuthRequest dto); //to login on role based
+	
+	ApiResponse addUsers(UserDTO user);//add user
+	
+	ApiResponse registerUser(UserDTO user);//register user
 }

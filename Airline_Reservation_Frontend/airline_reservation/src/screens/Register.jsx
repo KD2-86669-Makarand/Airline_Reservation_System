@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
 import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 function Register() {
   const [firstName, setFirstName] = useState("");
@@ -14,40 +17,55 @@ function Register() {
 
   const navigate = useNavigate();
   const onSignup = async () => {
-    if (firstName.length == 0) {
+    if (firstName.length === 0) {
       toast.warn("Please enter first name");
-    } else if (lastName.length == 0) {
+    } else if (lastName.length === 0) {
       toast.warn("Please enter last name");
-    } else if (email.length == 0) {
+    } else if (email.length === 0) {
       toast.warn("Please enter email");
-    } else if (phone.length == 0) {
+    } else if (phone.length === 0) {
       toast.warn("Please enter phone number");
-    } else if (password.length == 0) {
+    } else if (password.length === 0) {
       toast.warn("Please enter password");
-    } else if (confirmPassword.length == 0) {
+    } else if (confirmPassword.length === 0) {
       toast.warn("Please confirm password");
-    } else if (password != confirmPassword) {
+    } else if (password !== confirmPassword) {
       toast.warn("Password does not match");
     } else {
-      const result = await onSignup(
+      // API request
+      const user = {
         firstName,
         lastName,
         email,
         password,
         dob,
         phone,
-        country
-      );
-      if (result["status"] == "success") {
-        toast.success("Successfully registered a new admin");
-
-        // go back
-        navigate(-1);
-      } else {
-        toast.error(result["error"]);
+        country,
+      };
+  
+      try {
+        const response = await fetch("http://localhost:8080/users/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(user),
+        });
+  
+        const result = await response.json();
+  
+        if (response.ok) {
+          toast.success("Successfully registered a new admin");
+          navigate("/login"); 
+        } else {
+          toast.error(result.message || "Registration failed");
+        }
+      } catch (error) {
+        toast.error("Server error: Unable to register");
       }
     }
   };
+  
   return (
     <div
       className="card shadow-lg p-4 rounded"

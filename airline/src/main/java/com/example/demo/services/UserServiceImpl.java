@@ -93,6 +93,27 @@ public List<UserRespDTO> getAllUser(){
 	return userDao.findAll().stream().map(user->modelMapper.map(user, UserRespDTO.class))
 			.collect(Collectors.toList());
 }
+
+
+@Override
+public ApiResponse addUsers(UserDTO user) {
+	UserEntity userEntity=modelMapper.map(user,UserEntity.class);
+	userEntity.setRole(UserRole.ROLE_USER);
+	UserEntity persistentUser=userDao.save(userEntity);
+	return new ApiResponse("Added new user with ID="
+			+ persistentUser.getId());
+}
+
+
+@Override
+public ApiResponse registerUser(UserDTO user) {
+	UserEntity userEntity=modelMapper.map(user,UserEntity.class);
+	userEntity.setRole(UserRole.ROLE_USER);
+	UserEntity persistentUser=userDao.save(userEntity);
+	return new ApiResponse("register new user with ID="
+			+ persistentUser.getId());
+}
+
 	
 
 	
