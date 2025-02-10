@@ -9,33 +9,34 @@ function Login() {
   const navigate = useNavigate(); // Hook for navigation
 
   const handleLogin = async (e) => {
+    const apiUrl = process.env.REACT_APP_API_URL;
     e.preventDefault();
-  
+
     if (!email || !password) {
       toast.error("Please fill in all fields.");
       return;
     }
-  
+
     try {
-      const response = await fetch("http://localhost:8080/users/signin", {
+      const response = await fetch(`${apiUrl}/users/signin`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-  
+
       // Get the response body
       const data = await response.json();
-  
+
       // Log the API response for debugging
       console.log("API Response:", data);
-  
+
       if (response.ok) {
         toast.success("Login successful!");
-  
+
         // Store user data in localStorage
         localStorage.setItem("token", data.body.token); // Token from the body
         localStorage.setItem("user", JSON.stringify(data.body.user)); // User data from the body
-  
+
         // Extract role and redirect accordingly
         if (data.body.user.role === "ROLE_ADMIN") {
           navigate("/AdminHome"); // Redirect Admin
@@ -50,14 +51,13 @@ function Login() {
       toast.error("Something went wrong. Try again later.");
     }
   };
-  
-  
 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
       <div className="card shadow-lg p-4 rounded" style={{ width: "400px" }}>
         <div className="text-center mb-4">
-          <h3 className="fw-bold">🛫 Airline Reservation Login</h3>
+          <h4 className="fw-bold">Airline Reservation</h4>
+          <h3 className="fw-bold">Login</h3>
           <p className="text-muted">Access your account</p>
         </div>
 
@@ -90,7 +90,10 @@ function Login() {
             />
           </div>
 
-          <button type="submit" className="btn btn-primary w-100 fw-semibold mt-3">
+          <button
+            type="submit"
+            className="btn btn-primary w-100 fw-semibold mt-3"
+          >
             Login
           </button>
         </form>
@@ -99,7 +102,8 @@ function Login() {
           <p>
             Don't have an account?
             <Link to="/register" className="text-decoration-none fw-semibold">
-              {" "}Register here
+              {" "}
+              Register here
             </Link>
           </p>
         </div>

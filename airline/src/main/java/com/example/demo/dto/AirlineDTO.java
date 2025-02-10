@@ -1,6 +1,5 @@
 package com.example.demo.dto;
 
-import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,12 +7,15 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+public class AirlineDTO {	
+    private Long airlineId;
+    private String airlineName;
+    private String airlineCode;
+    private String country;
+    private Status status;
 
-public class AirlineDTO extends BaseDTO
-{	
-	private String airlineName;
-
-	private String airlineCode;
-
-	private String country;
+    public enum Status {
+        ACTIVE,
+        INACTIVE;
+    }
 }

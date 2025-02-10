@@ -22,7 +22,6 @@ header a {
     text-decoration: none;
     color: #333;
     margin-right: 20px;
-    
 }
 
 header a:last-child {
@@ -30,15 +29,13 @@ header a:last-child {
 }
 
 .hero {
-    /* background-image: url('D:\AIRLINE_RESERVATION_SYSTEM\Airline_Reservation_System\Airline_Reservation_System\airline_reservation\public');  kartik */
-    background-image: url('H:\Airline_Reservation_System\Airline_Reservation_System\Airline_Reservation_Frontend\airline_reservation\public\background4.jpg'); /* makarand */
+    background-image: url('../public/background4.jpg'); /* Adjust path as needed */
     background-position: center;
     background-size: cover;
     height: 650px;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* color: white; */
     text-align: center;
     background-blend-mode: darken;
 }
@@ -52,4 +49,3 @@ header a:last-child {
     font-size: 60px;
     max-width: 500px;
 }
-
