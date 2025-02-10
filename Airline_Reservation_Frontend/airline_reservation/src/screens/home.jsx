@@ -11,7 +11,17 @@ function Home() {
           {" "}
           <a href="/">New Horizon</a>
         </div>
+
+
+        <nav>
+          <a href="AvailableFlights">Flights</a>
+          <a href="Book">Book</a>
+          {/* <a href="SearchFlight">Search</a> */}
+          <a href="login">Sign In</a>
+        </nav>
+
         <Navbar />
+
       </header>
 
       <div className="hero">
