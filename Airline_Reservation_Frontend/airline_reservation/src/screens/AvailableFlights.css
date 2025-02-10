@@ -1,13 +1,13 @@
-.list-group-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 15px;
-}
-
-h6 {
-  margin: 0;
-}
-
-.text-muted {
-  font-size: 14px;
+container mt-5 {
+    /* background-image: url('D:\AIRLINE_RESERVATION_SYSTEM\Airline_Reservation_System\Airline_Reservation_System\airline_reservation\public');  kartik */
+    background-image: url('H:\Airline_Reservation_System\Airline_Reservation_System\Airline_Reservation_Frontend\airline_reservation\public\background4.jpg'); /* makarand */
+    background-position: center;
+    background-size: cover;
+    height: 650px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* color: white; */
+    text-align: center;
+    background-blend-mode: darken;
 }
