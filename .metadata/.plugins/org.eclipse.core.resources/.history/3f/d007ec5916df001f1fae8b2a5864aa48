@@ -1,0 +1,94 @@
+package com.example.demo.services;
+
+import java.time.Duration;
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.ui.ModelMap;
+
+import com.example.demo.dao.FlightDao;
+import com.example.demo.dao.AircraftDao;
+import com.example.demo.dao.AirlineDao;
+import com.example.demo.dao.AirportDao;
+import com.example.demo.dto.AircraftDTO;
+import com.example.demo.dto.AirlineDTO;
+import com.example.demo.dto.AirportDTO;
+import com.example.demo.dto.ApiResponse;
+import com.example.demo.dto.FlightDTO;
+import com.example.demo.entity.Aircraft;
+import com.example.demo.entity.Airlines;
+import com.example.demo.entity.Airport;
+import com.example.demo.entity.Flight;
+import com.example.demo.entity.UserEntity;
+
+import jakarta.transaction.Transactional;
+
+@Service
+@Transactional
+public class AdminServiceImpl implements AdminService {
+
+    @Autowired
+    private FlightDao flightDao;
+    
+    @Autowired
+    private AirlineDao airlineDao;
+    
+    @Autowired
+    private AircraftDao aircraftDao;
+    
+    @Autowired
+    private AirportDao airportDao;
+    
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public ApiResponse addFlight(FlightDTO flightDTO) {
+        Airlines airline = airlineDao.findById(flightDTO.getAirline())
+            .orElseThrow(() -> new RuntimeException("Airline not found for Id = " + flightDTO.getAirline()));
+        
+        Aircraft aircraft = aircraftDao.findById(flightDTO.getAircraftId())
+            .orElseThrow(() -> new RuntimeException("Aircraft not found for Id = " + flightDTO.getAircraftId()));
+        
+        Airport originAirport = airportDao.findById(flightDTO.getOrigineAirport())
+            .orElseThrow(() -> new RuntimeException("Origin airport not found for Id = " + flightDTO.getOrigineAirport()));
+
+        Airport destinationAirport = airportDao.findById(flightDTO.getDestinationAirport())
+            .orElseThrow(() -> new RuntimeException("Destination airport not found for Id = " + flightDTO.getDestinationAirport()));
+
+        Duration duration = Duration.between(flightDTO.getDepartureTime(), flightDTO.getArrivalTime());
+
+        Flight flight = new Flight();
+        flight.setAirline(airline);
+        flight.setAircraftId(aircraft);
+        flight.setOrigineAirport(originAirport);
+        flight.setDestinationAirport(destinationAirport);
+        flight.setDistance(flightDTO.getDistance());
+        flight.setDirect(true);
+        flight.setDuration(duration.toHours());
+
+        Flight savedFlight = flightDao.save(flight);
+        return new ApiResponse("Added New Flight With Id = " + savedFlight.getFlightId());
+    }
+
+    @Override
+    public ApiResponse cancelFlight(Long flightId) {
+        Flight flight = flightDao.findById(flightId)
+            .orElseThrow(() -> new RuntimeException("Flight not found for ID = " + flightId));
+        
+        if (flight.isCancelled()) {
+            return new ApiResponse("Flight with ID " + flightId + " is already cancelled.");
+        }
+
+        flight.setCancelled(true);
+        flightDao.save(flight);
+
+        return new ApiResponse("Flight with ID " + flightId + " has been cancelled.");
+    }
+
+    // Similar refactor for addAirline, addAircraft, addAirport
+}
+
+

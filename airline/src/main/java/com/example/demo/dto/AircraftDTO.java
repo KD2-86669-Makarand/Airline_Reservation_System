@@ -15,10 +15,11 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 
-public class AircraftDTO {
+public class AircraftDTO
+{
 	private String aircraftModel;
 
 	private int aircraftCapacity;
-
-	private Long airline;
+	
+    private String airlineName;
 }

@@ -76,7 +76,8 @@ function Register() {
         marginRight: "20%",
       }}
     >
-      <h2 className="header text-center">🛫 Airline Reservation Register</h2>
+      <h2 className="header text-center">Airline Reservation</h2>
+      <h2 className="header text-center">Register</h2>
       <div className="row">
         <div className="col-md-1"></div>
         <div className="col">
@@ -178,7 +179,10 @@ function Register() {
           </div>
           <div className="text-center">
             <div className="mb-4">
-              Already have an account? <Link to="/login">Signin here</Link>
+              Already have an account?{" "}
+              <Link to="/login" className="text-decoration-none fw-semibold">
+                Signin here
+              </Link>
             </div>
             <button onClick={onSignup} className="mt-3 btn btn-success">
               Signup
