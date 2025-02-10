@@ -1,5 +1,7 @@
-import logo from "./logo.svg";
+
 import "./App.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; 
 import Login from "./screens/login";
 import { Routes, Route } from "react-router-dom";
 import Home from "./screens/home";
@@ -16,6 +18,8 @@ import Payment from "./screens/Payment"; // Keeping Payment component
 function App() {
   return (
     <div>
+
+<ToastContainer />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="login" element={<Login />} />
