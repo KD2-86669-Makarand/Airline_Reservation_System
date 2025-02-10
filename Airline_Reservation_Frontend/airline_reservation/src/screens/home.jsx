@@ -12,6 +12,8 @@ function Home() {
           <a href="/">New Horizon</a>
         </div>
 
+        <Navbar />
+
 
         <nav>
           <a href="AvailableFlights">Flights</a>
@@ -19,8 +21,6 @@ function Home() {
           {/* <a href="SearchFlight">Search</a> */}
           <a href="login">Sign In</a>
         </nav>
-
-        <Navbar />
 
       </header>
 
